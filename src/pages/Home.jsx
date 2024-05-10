@@ -2,7 +2,9 @@ import React from 'react'
 
 function Home() {
   return (
-    <div>Home Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas ipsam laborum nesciunt reiciendis aliquam autem dolorem officia sequi provident! Commodi laborum iure nobis saepe tenetur optio temporibus numquam voluptatum voluptatibus esse odio repellendus modi quis minima sapiente, alias nihil, neque veritatis voluptates magnam deleniti magni. Nemo omnis eius praesentium quos quaerat sapiente, cum quidem eaque ducimus et amet sint consequatur a laudantium tenetur libero, ipsam maiores iure accusantium veniam possimus commodi corporis? Harum id, pariatur unde, quae ullam dicta temporibus incidunt optio porro mollitia rem non provident soluta ducimus sint at velit corrupti minima neque corporis laboriosam reiciendis, facilis ab. At, animi rem. Labore saepe repellat aliquid voluptates quia illum fugiat dolorum magnam recusandae a deserunt nesciunt suscipit libero temporibus, quaerat tempora! Maxime cumque odit optio tempore repudiandae quos enim, dignissimos facere non eos excepturi quis? Fugit facere, similique rerum amet iusto beatae magnam cum laudantium. Odit modi pariatur animi culpa sit nisi atque dolor inventore voluptatibus facilis beatae, harum sunt, obcaecati nemo iusto debitis tempora assumenda saepe in dolore molestias adipisci? Sed, culpa! Corporis tempora perspiciatis, quos iste quia, minus earum similique, assumenda sunt obcaecati provident facilis consequatur? Quis, doloremque. Id sunt, dignissimos delectus est vitae nostrum soluta distinctio esse possimus temporibus at iusto hic veniam officia illum ab nulla eos beatae pariatur corrupti magni! Vel voluptatibus animi, minima fugiat magni eos neque quis perferendis quidem, nesciunt mollitia aspernatur repellat minus impedit sequi obcaecati expedita cum velit. Repellendus officiis delectus temporibus omnis quo obcaecati eius dicta quibusdam veritatis nostrum!</div>
+   <section className=''>
+    
+   </section>
   )
 }
 

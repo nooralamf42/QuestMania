@@ -1,3 +1,4 @@
 import Container from "./Container";
-
-export {Container}
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+export {Container, Navbar, Footer}
