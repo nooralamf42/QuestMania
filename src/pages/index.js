@@ -1,5 +1,5 @@
 import Home from "./Home";
-import Login from "./Login";
+import Signin from "./Signin";
 import Signup from "./Signup";
 
-export {Home, Login, Signup}
+export {Home, Signin, Signup}
