@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router";
-import { Link } from "react-router-dom";
-import { Container, Footer, Navbar } from "./components";
+import { Footer, Loading, Navbar } from "./components";
+import {useSelector, useDispatch} from 'react-redux'
+import { checkLogin } from "./redux/appSlice";
+import { auth } from "./firebase/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
-  return (
+  const dispatch = useDispatch()
+  const fetchingData = useSelector(pre=>pre.fetchingData)
+  
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user)=>{
+      if(user)
+        dispatch(checkLogin(true))
+      else dispatch(checkLogin(false))
+    })
+  }, [])
+
+  if(fetchingData) return <Loading/>
+  else console.log(fetchingData)
+  return (   
     <>
       <header className="shadow bg-gray-200 bg-opacity-40">
        <Navbar/>
       </header>
-      <Outlet /> 
+      <Outlet />
       <Footer/>
     </>
   );

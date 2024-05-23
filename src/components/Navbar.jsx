@@ -2,9 +2,20 @@ import { BiMenuAltRight } from "react-icons/bi";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Container from "./Container";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
+import { checkLogin } from "../redux/appSlice";
 
 function Navbar() {
     let [menuClicked, setMenuClicked] = useState(false);
+    const isLogged = useSelector(pre=>pre.isLogged);
+    const dispatch = useDispatch()
+    const logoutHandler = () =>{
+      signOut(auth)
+      dispatch(checkLogin(false))
+    }
+
   return (
     <Container className="px-[.6rem] relative">
       <nav className="flex justify-between items-center sm:px-5 py-3">
@@ -13,11 +24,14 @@ function Navbar() {
           <li className="hover:scale-105 duration-100">
             <Link  to={"/"}>Home</Link>
           </li>
-          <li className="hover:scale-105 duration-100">
-            <Link  to={"/login"}>Login</Link>
+          <li className={`"hover:scale-105 duration-100" ${isLogged && 'hidden'}`}>
+            <Link  to={"/signin"}>Login</Link>
           </li>
-          <li className="hover:scale-105 duration-100">
+          <li className={`"hover:scale-105 duration-100" ${isLogged && 'hidden'}`}>
             <Link  to={"/signup"}>Signup</Link>
+          </li>
+          <li className={`"hover:scale-105 duration-100" ${!isLogged && 'hidden'}`}>
+            <Link  onClick={logoutHandler} to={"/"}>Logout</Link>
           </li>
         </ul>
 

@@ -1,4 +1,5 @@
 import Container from "./Container";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-export {Container, Navbar, Footer}
+import Loading from "./Loading";
+export {Container, Navbar, Footer, Loading}

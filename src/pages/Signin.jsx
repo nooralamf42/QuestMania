@@ -1,3 +1,7 @@
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { useState } from "react"
+import { auth } from "../firebase/firebaseConfig"
+
 /*
   This example requires some changes to your config:
   
@@ -12,6 +16,20 @@
   ```
 */
 export default function Signin() {
+
+    const [inputs, setInputs] = useState({email:'', password:''})
+    const [error, setError] = useState(null)
+    const submitHandler = (e) =>{
+      e.preventDefault()
+      signInWithEmailAndPassword(auth,inputs.email, inputs.password)
+        .then((data)=>{
+          alert("user has been logged in")
+          console.log(data)
+        }).catch(e=>setError(e.message))
+        
+        
+    }
+
     return (
       <>
         {/*
@@ -35,13 +53,14 @@ export default function Signin() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={(e)=>submitHandler(e)} >
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
                 </label>
                 <div className="mt-2">
                   <input
+                    onChange={(e)=>setInputs({...inputs, email: e.target.value})}
                     id="email"
                     name="email"
                     type="email"
@@ -65,6 +84,7 @@ export default function Signin() {
                 </div>
                 <div className="mt-2">
                   <input
+                    onChange={(e)=>setInputs({...inputs, password: e.target.value})}
                     id="password"
                     name="password"
                     type="password"
@@ -82,6 +102,7 @@ export default function Signin() {
                 >
                   Sign in
                 </button>
+                <h1 className={`${error ? 'text-red-500' : 'hidden'}`}>{error}</h1>
               </div>
             </form>
   
