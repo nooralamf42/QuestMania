@@ -3,17 +3,17 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, } from 'firebase/auth'
 import {arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc} from 'firebase/firestore'
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDRfcT6SQExjtrHH5UW3-QEtQL-4iDvAeE",
-    authDomain: "questmania-d6054.firebaseapp.com",
-    databaseURL: "https://questmania-d6054-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "questmania-d6054",
-    storageBucket: "questmania-d6054.appspot.com",
-    messagingSenderId: "764471043299",
-    appId: "1:764471043299:web:6ceb9f0b6137e5e3b411d6",
-    measurementId: "G-0DRWE36RMP"
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_DB,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_ID,
+    appId: import.meta.env.VITE_APP_ID,
+    measurementId: import.meta.env.VITE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -26,27 +26,60 @@ export default app;
 //functions to create, read and update docs
 
 export const createMessege = async(messege, uid) =>{
+    function getCurrentDate() {
+        const now = new Date();
+      
+        const year = now.getFullYear();
+        const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+        const date = now.getDate().toString().padStart(2, '0');
+      
+        return `${year}-${month}-${date}`;
+      }
+      
+      function getCurrentTime() {
+        const now = new Date();
+      
+        let hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+        hours = hours % 12; // Convert hours to 12-hour format
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+        hours = hours.toString().padStart(2, '0');
+      
+        return `${hours}:${minutes}:${seconds} ${ampm}`;
+      }
+      
+      const date = getCurrentDate();
+      const time = getCurrentTime();   
     const docRef = doc(database, 'Messeges', uid)
+
     try {
-        await updateDoc(docRef, {messeges : arrayUnion(messege)})
+        await updateDoc(docRef, {messeges : arrayUnion({messege, time, date})})
+        await toast.success('Message added successfully')
+
     } catch (error) {
         if(error.message.includes("No document to update")){
             try {
                 await setDoc(docRef, {
-                    messeges : [messege]
+                    messeges : [{messege, time, date}]
                 })
+                await toast.success('Message added successfully')
             } catch (error) {
+                toast.error(error.message)
                 console.log(error.message)
             }
-        }
+        }else(toast.error(error.message))
     }
 }
 
-export const readMesseges = async(messege, uid) =>{
+export const readMesseges = async(uid) =>{
     const docRef = doc(database, 'Messeges', uid)
     try {
-        const messages = await getDoc(docRef)
-        return messages.data().messages
+        const data = await getDoc(docRef)
+        let message = data.data()
+        return message.messeges
     } catch (error) {
         console.log(error.message)
     }

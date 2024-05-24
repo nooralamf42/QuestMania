@@ -5,6 +5,8 @@ import {useSelector, useDispatch} from 'react-redux'
 import { checkLogin } from "./redux/appSlice";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch()
@@ -21,6 +23,7 @@ function App() {
   if(fetchingData) return <Loading/>
   return (   
     <>
+      <ToastContainer position="bottom-center" autoClose='1000'/>
       <header className="shadow bg-gray-200 bg-opacity-40">
        <Navbar/>
       </header>

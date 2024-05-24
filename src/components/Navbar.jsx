@@ -6,15 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import { checkLogin } from "../redux/appSlice";
+import { toast } from "react-toastify";
 
 function Navbar() {
     let [menuClicked, setMenuClicked] = useState(false);
     const isLogged = useSelector(pre=>pre.user);
     const dispatch = useDispatch()
-    console.log(isLogged)
     const logoutHandler = () =>{
       dispatch(checkLogin(null))
       signOut(auth)
+      toast("Logged out")
     }
 
   return (
@@ -25,29 +26,38 @@ function Navbar() {
           <li className="hover:scale-105 duration-100">
             <Link  to={"/"}>Home</Link>
           </li>
-          <li className={`"hover:scale-105 duration-100" ${isLogged && 'hidden'}`}>
+          <li className={`hover:scale-105 duration-100 ${isLogged && 'hidden'}`}>
             <Link  to={"/signin"}>Login</Link>
           </li>
-          <li className={`"hover:scale-105 duration-100" ${isLogged && 'hidden'}`}>
+          <li className={`hover:scale-105 duration-100 ${isLogged && 'hidden'}`}>
             <Link  to={"/signup"}>Signup</Link>
           </li>
-          <li className={`"hover:scale-105 duration-100" ${!isLogged && 'hidden'}`}>
+          <li className={`hover:scale-105 duration-100 ${!isLogged && 'hidden'}`}>
             <Link  onClick={logoutHandler} to={"/"}>Logout</Link>
+          </li>
+          <li className={`hover:scale-105 duration-100 ${!isLogged && 'hidden'}`}>
+            <Link to={"/messages"}>Messages</Link>
           </li>
         </ul>
 
         <button className={`sm:hidden ${menuClicked&& 'rotate-180 duration-150'}`}><BiMenuAltRight size={24} onClick={()=>setMenuClicked((pre)=>!pre)}/></button>
       </nav>
-      <aside className={`translate-x-[-100%] duration-300 ${menuClicked ? 'flex translate-x-0' : 'hidden'}`}>
+      <aside className={` duration-300 sm:hidden ${menuClicked ? 'flex' : 'hidden'}`}>
       <ul className={`gap-4 justify-end w-full text-right pr-3 text-lg flex-row`}>
-          <li className="hover:scale-105 duration-100">
+      <li className="hover:scale-105 duration-100">
             <Link  to={"/"}>Home</Link>
           </li>
-          <li className="hover:scale-105 duration-100">
-            <Link  to={"/login"}>Login</Link>
+          <li className={`hover:scale-105 duration-100 ${isLogged && 'hidden'}`}>
+            <Link  to={"/signin"}>Login</Link>
           </li>
-          <li className="hover:scale-105 duration-100">
+          <li className={`hover:scale-105 duration-100 ${isLogged && 'hidden'}`}>
             <Link  to={"/signup"}>Signup</Link>
+          </li>
+          <li className={`hover:scale-105 duration-100 ${!isLogged && 'hidden'}`}>
+            <Link  onClick={logoutHandler} to={"/"}>Logout</Link>
+          </li>
+          <li className={`hover:scale-105 duration-100 ${!isLogged && 'hidden'}`}>
+            <Link to={"/messages"}>Messages</Link>
           </li>
         </ul>
       </aside>

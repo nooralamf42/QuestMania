@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
 import { auth } from "../firebase/firebaseConfig"
+import { toast } from "react-toastify"
 
 /*
   This example requires some changes to your config:
@@ -23,11 +24,8 @@ export default function Signin() {
       e.preventDefault()
       signInWithEmailAndPassword(auth,inputs.email, inputs.password)
         .then((data)=>{
-          alert("user has been logged in")
-          console.log(data)
+          toast.success("Logged in successfully")
         }).catch(e=>setError(e.message))
-        
-        
     }
 
     return (

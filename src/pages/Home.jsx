@@ -1,44 +1,16 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
-import { auth, database } from "../firebase/firebaseConfig"
-import {arrayUnion, doc, getDoc, setDoc, updateDoc} from 'firebase/firestore'
-import { ref, set } from "firebase/database"
-import { useSelector } from "react-redux"
-
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { CreateLink } from '../components'
 
 function Home() {
-  const userId = auth.currentUser.uid
-  const clickHandler = async() => {
-    try {
-        await updateDoc(doc(database, 'Users', userId), {messeges : 
-          arrayUnion(
-            'whats your aim'
-          )
-        })
-
-        // const messeges = await getDoc(doc(database,'Users', userId))
-        // console.log(messeges.data())
-        // if(user)
-        //   console.log(user)
-        // else throw Error('error while creating user')
-      
-    } catch (error) {
-      if(error.message.includes("No document to update")){
-        console.log('hello')
-        try {
-          await setDoc(doc(database, 'Users', userId), {messeges : ['first messege']
-          })
-        } catch (error) {
-          console.log(error)
-        }
-      }
-
-      console.log(error.message)
-    }
-  }
+  const isLogged = useSelector(data=>data.user)
   return (
-   <section className=''>
-    <button className="rounded border px-2 my-4" onClick={clickHandler}>test here</button>
-   </section>
+    <section className='text-center py-12'>
+      <h1 className='text-3xl mb-5'>Ask anonymous questions! !</h1>
+        {
+          isLogged && <CreateLink/>
+        }
+    </section>
   )
 }
 
