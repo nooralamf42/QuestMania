@@ -2,6 +2,8 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth, } from 'firebase/auth'
+import {arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc} from 'firebase/firestore'
+import { useSelector } from "react-redux";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDRfcT6SQExjtrHH5UW3-QEtQL-4iDvAeE",
@@ -18,5 +20,34 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Export the Firebase modules you'll use
 export const auth = getAuth(app) 
-
+export const database = getFirestore(app)
 export default app;
+
+//functions to create, read and update docs
+
+export const createMessege = async(messege, uid) =>{
+    const docRef = doc(database, 'Messeges', uid)
+    try {
+        await updateDoc(docRef, {messeges : arrayUnion(messege)})
+    } catch (error) {
+        if(error.message.includes("No document to update")){
+            try {
+                await setDoc(docRef, {
+                    messeges : [messege]
+                })
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+    }
+}
+
+export const readMesseges = async(messege, uid) =>{
+    const docRef = doc(database, 'Messeges', uid)
+    try {
+        const messages = await getDoc(docRef)
+        return messages.data().messages
+    } catch (error) {
+        console.log(error.message)
+    }
+}

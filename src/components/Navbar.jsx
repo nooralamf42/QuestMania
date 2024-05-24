@@ -9,11 +9,12 @@ import { checkLogin } from "../redux/appSlice";
 
 function Navbar() {
     let [menuClicked, setMenuClicked] = useState(false);
-    const isLogged = useSelector(pre=>pre.isLogged);
+    const isLogged = useSelector(pre=>pre.user);
     const dispatch = useDispatch()
+    console.log(isLogged)
     const logoutHandler = () =>{
+      dispatch(checkLogin(null))
       signOut(auth)
-      dispatch(checkLogin(false))
     }
 
   return (

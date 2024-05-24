@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home, Signin, Signup } from "./pages";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
+import { Protected } from "./components/index.js";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/signin",
-        element: <Signin />,
+        element: <Protected><Signin /></Protected>,
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: <Protected><Signup /></Protected>,
       },
     ],
   },

@@ -13,13 +13,12 @@ function App() {
   useEffect(()=>{
     onAuthStateChanged(auth, (user)=>{
       if(user)
-        dispatch(checkLogin(true))
-      else dispatch(checkLogin(false))
+        dispatch(checkLogin(user))
+      else dispatch(checkLogin(null))
     })
   }, [])
 
   if(fetchingData) return <Loading/>
-  else console.log(fetchingData)
   return (   
     <>
       <header className="shadow bg-gray-200 bg-opacity-40">

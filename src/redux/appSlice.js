@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    isLogged : false,
+    user : null,
     fetchingData : true,
 }
 
@@ -11,8 +11,8 @@ export const appSlice = createSlice(
         name : 'app',
         initialState,
         reducers : {
-            checkLogin : (state, actions) =>{
-                state.isLogged = actions.payload
+            checkLogin : (state, actions) =>{   
+                state.user = actions.payload
                 state.fetchingData = false
             },
         }
