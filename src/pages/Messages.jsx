@@ -11,7 +11,7 @@ function Messages() {
       setMessege(me);
     });
   }, []);
-  if (messege) return <section className="flex justify-center items-center w-full">
+  if (messege) return <section className="flex justify-center items-center">
     <ul className="flex-row">
     {
         messege.map(n=><li className="p-4 rounded-lg bg-white m-5 shadow-2xl text-black flex justify-between gap-4">

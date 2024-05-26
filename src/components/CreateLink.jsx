@@ -16,8 +16,8 @@ function CreateLink() {
     toast.success("Copied to clipboard");
   }
   return (
-    <div>
-      <span className="mr-3">{url+uid}</span>
+    <div className="overflow-hidden">
+      <span className="mr-3 text-wrap">{url+uid}</span>
       <button className="rounded-lg px-4 py-2 bg-black text-white hover:bg-gray-800" onClick={clickHandlder}>Click here to copy</button>
       <h1 className="mt-3 text-xl">Share this link with friends to start !</h1>
     </div>

@@ -23,7 +23,10 @@ function App() {
   if(fetchingData) return <Loading/>
   return (   
     <>
-      <ToastContainer position="bottom-center" autoClose='1000'/>
+      <ToastContainer
+      position="bottom-center" autoClose='100'
+      bodyStyle={{width:8+"%"}}
+      />
       <header className="shadow bg-gray-200 bg-opacity-40">
        <Navbar/>
       </header>

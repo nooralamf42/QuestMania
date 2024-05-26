@@ -57,7 +57,6 @@ export const createMessege = async(messege, uid) =>{
 
     try {
         await updateDoc(docRef, {messeges : arrayUnion({messege, time, date})})
-        await toast.success('Message added successfully')
 
     } catch (error) {
         if(error.message.includes("No document to update")){
@@ -65,7 +64,6 @@ export const createMessege = async(messege, uid) =>{
                 await setDoc(docRef, {
                     messeges : [{messege, time, date}]
                 })
-                await toast.success('Message added successfully')
             } catch (error) {
                 toast.error(error.message)
                 console.log(error.message)
