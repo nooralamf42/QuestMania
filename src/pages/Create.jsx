@@ -15,7 +15,8 @@ function Create() {
     const randomQuestion = questions[questionNumber]
     setMessage(randomQuestion)
   }
-  const clickHandler = async () => {
+  const clickHandler = async (e) => {
+    e.preventDefault()
     createMessege(message, username);
     navigate('/sent/' + username);
   };
@@ -24,7 +25,7 @@ function Create() {
     setMessage(e.target.value)
   }
   return (
-    <Container>
+    <Container className={'h-[90vh]'}>
       <div className="w-full max-w-[500px]  mx-auto py-10 relative">
         <div className="rounded-3xl overflow-hidden">
           <div className="bg-white flex items-center gap-4 p-3">
@@ -39,25 +40,29 @@ function Create() {
               <h2 className="font-semibold">send message anonymous!!</h2>
             </div>
           </div>
+          <form onSubmit={clickHandler}>
+            
           <textarea
             type="text"
+            required
             value={message}
             onInput={inputHandler}
             className="p-2 focus:outline-none w-full text-xl bg-white bg-opacity-30 backdrop-blur-md"
             placeholder="type your question here"
           />
-          <button className="absolute bottom-28 right-3 rounded-full bg-white bg-opacity-30 p-1 m-2"
+          <button type="button" className="absolute bottom-28 right-3 rounded-full bg-white bg-opacity-30 p-1 m-2"
           onClick={diceHandler}
           >
             <FaDice color="black" size={28}/>
           </button>
-        </div>
         <button
           className="mt-5 text-white text-lg hover:scale-105 duration-200 hover:-rotate-3 bg-black py-2 rounded-2xl w-full"
-          onClick={clickHandler}
+          type='submit'
         >
           Submit
         </button>
+          </form>
+        </div>
       </div>
     </Container>
   );

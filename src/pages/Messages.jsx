@@ -1,29 +1,109 @@
-import React, { useEffect, useState } from "react";
-import { auth, readMesseges } from "../firebase/firebaseConfig";
+import { IoMdClose } from "react-icons/io"; 
+import { GiLoveLetter } from "react-icons/gi"; 
+import { useSelector } from "react-redux";
+import { updateMessege } from "../firebase/firebaseConfig";
+import Modal from 'react-modal'
+import { useState } from "react";
 
+
+Modal.setAppElement("#root")
 function Messages() {
-  const uid = auth.currentUser.uid;
-  console.log(uid);
-  let [messege, setMessege] = useState(null);
-  useEffect(() => {
-    const data = readMesseges(uid);
-    data.then((me) => {
-      setMessege(me);
-    });
-  }, []);
-  if (messege) return <section className="flex justify-center items-center w-full">
-    <ul className="flex-row">
-    {
-        messege.reverse().map(n=><li className="p-4 rounded-lg bg-white m-5 shadow-2xl text-black flex justify-between gap-4">
-          <h3>{n.messege}</h3>
-          <div>
-            <h4 className="text-sm text-gray-600">{n.time}</h4>
-            <h4 className="text-xs text-center text-gray-600">{n.date}</h4>
-          </div>
-        </li>)
+  let user = useSelector((data) => data.user.uid);
+  let messege = useSelector((data) => data.messages);
+  let [modalMessage, setModalMessage] = useState('')
+  const clickHandler = (n) => {
+    updateMessege(n.time, user, messege);
+    openModal()
+    setModalMessage(n.messege)
+  };
+
+  function timeAgo(dateTimeString) {
+    const now = new Date();
+    const dateTimeParts = dateTimeString.split(' ');
+    const timePart = dateTimeParts[0];
+    const amPmPart = dateTimeParts[1];
+    const datePart = dateTimeParts[2];
+    
+    // Combine date and time parts into a full datetime string
+    const dateTime = new Date(`${datePart} ${timePart} ${amPmPart}`);
+    
+    // Calculate the difference in milliseconds
+    const diff = now - dateTime;
+    
+    // Calculate difference in minutes, hours, and days
+    const diffMinutes = Math.floor(diff / (1000 * 60));
+    const diffHours = Math.floor(diff / (1000 * 60 * 60));
+    const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+    
+    if (diffMinutes < 60) {
+      return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+    } else if (diffHours < 24) {
+      return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+    } else {
+      return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
     }
-    </ul>
-  </section>;
+  }
+  
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  if (messege)
+    return (
+      <section className="flex justify-center items-center w-full h-[100%]">
+        <ul className="flex flex-col-reverse gap-2 py-5">
+          {messege.map((n) => (
+            <li
+              key={n.time}
+              onClick={() => clickHandler(n)}
+              className="cursor-pointer p-4 rounded-lg bg-white shadow-2xl text-black flex"
+            >
+              <div className={`${!n.seen && 'hidden'} flex justify-center items-center gap-3`}>
+                <div className="p-2 border rounded-xl bg-slate-200">
+                  <GiLoveLetter size={35} color="#fc6060" className="opacity-60"/>
+                </div>
+                <div className="flex-row">
+                <h3>{n.messege}</h3>
+                  <h4 className="text-sm text-gray-600">{timeAgo(n.time + ' ' + n.date)}</h4>
+                </div>
+              </div>
+              <div className={`${n.seen && 'hidden'} flex items-center justify-center gap-3`}>
+              <div className="p-3 border rounded-xl bg-red-200">
+                  <GiLoveLetter size={35} color="red"/>
+                </div>
+                  <div className="flex-row">
+                  <h3>New Message!</h3>
+                  <h4 className="text-sm text-gray-600">{timeAgo(n.time + ' ' + n.date)}</h4>
+                  </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        className={'m-0 bg-white h-full flex justify-center items-center'}
+      >
+        <button className="absolute m-4 right-0 top-0" onClick={closeModal}><IoMdClose size={25}/></button>
+        <div className="rounded-3xl shadow-2xl overflow-hidden max-w-[400px] w-[90%] text-center">
+          <div className="bg-gradient-to-r from-violet-600 to-indigo-600 p-7">
+            <h1 className="font-semibold text-white text-lg">shh! send me message anonymously</h1>
+          </div>
+          <h1 className="p-7 font-bold text-lg">{modalMessage}</h1>
+        </div>
+      </Modal>
+    </div>
+      </section>
+    );
   return <h1>there's no messege for you yet!</h1>;
 }
 
