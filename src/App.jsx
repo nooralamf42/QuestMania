@@ -24,8 +24,7 @@ function App() {
   return (   
     <>
       <ToastContainer
-      position="bottom-center" autoClose='100'
-      bodyStyle={{width:8+"%"}}
+      position="bottom-center" autoClose='1000'
       />
       <header className="shadow bg-gray-200 bg-opacity-40">
        <Navbar/>

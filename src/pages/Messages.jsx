@@ -11,10 +11,10 @@ function Messages() {
       setMessege(me);
     });
   }, []);
-  if (messege) return <section className="flex justify-center items-center">
+  if (messege) return <section className="flex justify-center items-center w-full">
     <ul className="flex-row">
     {
-        messege.map(n=><li className="p-4 rounded-lg bg-white m-5 shadow-2xl text-black flex justify-between gap-4">
+        messege.reverse().map(n=><li className="p-4 rounded-lg bg-white m-5 shadow-2xl text-black flex justify-between gap-4">
           <h3>{n.messege}</h3>
           <div>
             <h4 className="text-sm text-gray-600">{n.time}</h4>

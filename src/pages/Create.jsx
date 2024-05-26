@@ -9,17 +9,20 @@ import questions from "../data/data";
 function Create() {
   const navigate = useNavigate()
   const [message, setMessage] = useState("");
-  const [text, setText] = useState('')
   const { username } = useParams();
   const diceHandler = () =>{
     const questionNumber = Math.floor(Math.random() * questions.length)
     const randomQuestion = questions[questionNumber]
-    setText(randomQuestion)
+    setMessage(randomQuestion)
   }
   const clickHandler = async () => {
     createMessege(message, username);
     navigate('/sent/' + username);
   };
+
+  const inputHandler = (e) =>{
+    setMessage(e.target.value)
+  }
   return (
     <Container>
       <div className="w-full max-w-[500px]  mx-auto py-10 relative">
@@ -38,8 +41,8 @@ function Create() {
           </div>
           <textarea
             type="text"
-            value={text}
-            onInput={(e) => setMessage(e.currentTarget.value)}
+            value={message}
+            onInput={inputHandler}
             className="p-2 focus:outline-none w-full text-xl bg-white bg-opacity-30 backdrop-blur-md"
             placeholder="type your question here"
           />
