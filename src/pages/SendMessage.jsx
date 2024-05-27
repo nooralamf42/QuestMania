@@ -1,7 +1,7 @@
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import React from "react";
 import { Container } from "../components";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SendMessage() {
     const pathname = window.location.href
@@ -11,7 +11,7 @@ function SendMessage() {
       navigate('/signup')
     }
   return (
-    <Container className={"text-center py-12 h-[90vh]"}>
+    <Container className={"text-center py-12"}>
       <IoMdCheckmarkCircle
         size={120}
         color="white"

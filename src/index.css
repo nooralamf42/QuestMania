@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
-    background: linear-gradient(62deg,#8EC5FC 0%, #E0C3FC 100%);
+/* html{
+    background: linear-gradient(62deg,#8EC5FC 0%,  100%);
     background-repeat: no-repeat;
     background-size: cover;
-}
+} */
 

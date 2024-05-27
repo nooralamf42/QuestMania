@@ -1,7 +1,6 @@
 import { GiMute } from "react-icons/gi"; 
 import { CiLogout } from "react-icons/ci";
-import { BiMenuAltRight } from "react-icons/bi";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Container from "./Container";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +10,13 @@ import { checkLogin } from "../redux/appSlice";
 import { toast } from "react-toastify";
 
 function Navbar() {
-  let [menuClicked, setMenuClicked] = useState(false);
+  let messeges = useSelector(data=>data.messages)
+  console.log('hi')
+  let unreadMessagesLength = messeges?.filter(messeges=>messeges.seen == false).length
+  let [newMessages, setNewMessages] = useState(0);
+  useEffect(()=>{
+    setNewMessages(unreadMessagesLength)
+  },[messeges])
   const isLogged = useSelector((pre) => pre.user);
   const dispatch = useDispatch();
   const logoutHandler = () => {
@@ -37,10 +42,11 @@ function Navbar() {
 
           <NavLink
           className={({ isActive }) =>
-          isActive ? 'text-blue-500' : 'text-gray-500'}
+          isActive ? 'text-blue-500 relative' : 'text-gray-500 relative'}
             to={"/messages"}
           >
             Messages
+            <div className={`${newMessages==0 ? 'hidden' : "absolute text-sm flex items-center justify-center text-white font-bold -right-6 top-1 bg-green-500 p-1 rounded-full w-5 h-5"} `}>{newMessages}</div>
           </NavLink>
         </div>
 

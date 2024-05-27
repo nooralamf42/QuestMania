@@ -33,8 +33,8 @@ function CreateLink() {
 
 export const StepCard = ({step,feature, children}) =>{
   return(
-    <div className="relative cursor-pointer dark:text-white max-w-[400px] w-[90%] text-center mb-5">
-    <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-indigo-500 rounded-lg dark:bg-gray-200"></span>
+    <div className="relative cursor-pointer dark:text-white max-w-[400px] w-[90%] text-center mb-5 shadow-2xl">
+    <span className="absolute top-0 left-0 w-full mt-1 ml-1 bg-indigo-500 rounded-lg dark:bg-gray-200"></span>
     <div
         className="relative p-6 bg-white dark:bg-gray-800 border-2 border-indigo-500 dark:border-gray-300 rounded-lg hover:scale-105 transition duration-500">
         <div className="flex items-center justify-center gap-2">

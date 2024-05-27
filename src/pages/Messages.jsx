@@ -1,16 +1,31 @@
+import { FaSadCry } from "react-icons/fa"; 
 import { IoMdClose } from "react-icons/io"; 
 import { GiLoveLetter } from "react-icons/gi"; 
-import { useSelector } from "react-redux";
-import { updateMessege } from "../firebase/firebaseConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { database, updateMessege } from "../firebase/firebaseConfig";
 import Modal from 'react-modal'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { setMessages } from "../redux/appSlice";
 
 
 Modal.setAppElement("#root")
 function Messages() {
+  let dispatch = useDispatch()
   let user = useSelector((data) => data.user.uid);
-  let messege = useSelector((data) => data.messages);
+  let initialMessege = useSelector(data=>data.messages)
+  let [messege, setMessege] = useState(initialMessege)
   let [modalMessage, setModalMessage] = useState('')
+  const docRef = doc(database, 'Messeges', user)
+  useEffect(()=>{
+    onSnapshot(docRef, (snapshot)=>{
+      const newMesseges = snapshot.data().messeges
+      dispatch(setMessages(newMesseges))
+      setMessege(newMesseges)
+    })
+  }, [])
+  const unreadMessages = messege?.filter(values=>values.seen==false).length 
+
   const clickHandler = (n) => {
     updateMessege(n.time, user, messege);
     openModal()
@@ -54,10 +69,10 @@ function Messages() {
     setIsOpen(false);
   }
 
-  if (messege)
+  if (messege!=undefined)
     return (
-      <section className="flex justify-center items-center w-full h-[100%]">
-        <ul className="flex flex-col-reverse gap-2 py-5">
+      <section className="flex justify-center items-center w-full h-full">
+        <ul className="flex flex-col-reverse max-w-[400px] w-[80%] gap-4 py-5">
           {messege.map((n) => (
             <li
               key={n.time}
@@ -104,7 +119,7 @@ function Messages() {
     </div>
       </section>
     );
-  return <h1>there's no messege for you yet!</h1>;
+  return <h1 className="text-xl font-semibold flex justify-center items-center h-[80vh]">😔 there's no messege for you yet!</h1>;
 }
 
 export default Messages;
