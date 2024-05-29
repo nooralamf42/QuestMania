@@ -57,7 +57,9 @@ function CreateLink() {
     setIsOpen(false);
   }
 
-  const storyHandler = async (url = "https://i.ibb.co/V3FsGrv/story.jpg", title = "story.jpg") => {
+  const storyHandler = async () => {
+    let url = "https://i.ibb.co/V3FsGrv/story.jpg"
+    let title = "story.jpg"
     const response = await fetch(url.toString());
     const blob = await response.blob();
 
@@ -65,7 +67,7 @@ function CreateLink() {
     const shareData = {
       title: title,
       files: filesArray,
-      text: "story",
+      text: "test",
     };
 
     if (navigator.canShare && navigator.canShare(shareData)) {
