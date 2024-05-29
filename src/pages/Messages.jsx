@@ -7,16 +7,19 @@ import Modal from 'react-modal'
 import { useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { setMessages } from "../redux/appSlice";
+import { useNavigate } from "react-router-dom";
+import Home from "./Home";
 
 
 Modal.setAppElement("#root")
 function Messages() {
   let dispatch = useDispatch()
-  let user = useSelector((data) => data.user.uid);
+  let user = useSelector((data) => data?.user?.uid);
   let initialMessege = useSelector(data=>data.messages)
   let [messege, setMessege] = useState(initialMessege)
   let [modalMessage, setModalMessage] = useState('')
-  const docRef = doc(database, 'Messeges', user)
+  if(user){
+    const docRef = doc(database, 'Messeges', user)
   useEffect(()=>{
     onSnapshot(docRef, (snapshot)=>{
       const newMesseges = snapshot.data().messeges
@@ -24,7 +27,7 @@ function Messages() {
       setMessege(newMesseges)
     })
   }, [])
-  const unreadMessages = messege?.filter(values=>values.seen==false).length 
+  }else return <Home/>
 
   const clickHandler = (n) => {
     updateMessege(n.time, user, messege);

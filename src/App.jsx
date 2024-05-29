@@ -22,11 +22,14 @@ function App() {
       else dispatch(checkLogin(null))
     })
   }, [])
-  if(fetchingData) return <Loading/>
+  if(fetchingData) {
+    console.log(fetchingData)
+    return <Loading visible={true}/>
+  }
   return (   
     <>
       <ToastContainer
-      position="bottom-center" autoClose='1500' style={{width: 90 + '%', maxWidth: "fit-content", marginLeft: "auto", marginRight: 'auto' }}
+      position="bottom-center" autoClose='1500'
       />
       <header className="shadow bg-gray-200 bg-opacity-40">
        <Navbar/>

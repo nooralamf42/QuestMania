@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
 import { auth } from "../firebase/firebaseConfig"
 import { toast } from "react-toastify"
+import { Loading } from "../components"
 
 /*
   This example requires some changes to your config:
@@ -19,30 +20,24 @@ import { toast } from "react-toastify"
 export default function Signup() {
 
     const [inputs, setInputs] = useState({email:'', password:''})
+    const [loading, setLoading] = useState(false)
     const submitHandler = (e) =>{
+      setLoading(true)
       e.preventDefault()
       createUserWithEmailAndPassword(auth,inputs.email, inputs.password)
         .then((data)=>{
-          alert("user has been created")
-          console.log(data)
-        }).catch(e=>toast.error(e.message))  
+          toast.success("Account created")
+        }).catch(e=>toast.error(e.message)).finally(()=>setLoading(false))  
     }
 
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
+        <Loading visible={loading}/>
         <div className="flex min-h-full flex-1 flex-col justify-center px-8 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://ss-six-phi.vercel.app/assets/shh-Er9Jewbo.svg"
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -64,7 +59,7 @@ export default function Signup() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -88,7 +83,7 @@ export default function Signup() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>

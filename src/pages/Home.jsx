@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux'
 import { CreateLink } from '../components'
 import { Link } from 'react-router-dom'
 
+
+// message page me errorr if not logged in 
+
 function Home() {
   const isLogged = useSelector(data=>data.user)
   return (
