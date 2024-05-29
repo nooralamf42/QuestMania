@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
 import { auth } from "../firebase/firebaseConfig"
+import { toast } from "react-toastify"
 
 /*
   This example requires some changes to your config:
@@ -18,14 +19,13 @@ import { auth } from "../firebase/firebaseConfig"
 export default function Signup() {
 
     const [inputs, setInputs] = useState({email:'', password:''})
-    const [error, setError] = useState(null)
     const submitHandler = (e) =>{
       e.preventDefault()
       createUserWithEmailAndPassword(auth,inputs.email, inputs.password)
         .then((data)=>{
           alert("user has been created")
           console.log(data)
-        }).catch(e=>setError(e.message))  
+        }).catch(e=>toast.error(e.message))  
     }
 
     return (
@@ -38,7 +38,7 @@ export default function Signup() {
           <body class="h-full">
           ```
         */}
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-8 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
@@ -100,7 +100,6 @@ export default function Signup() {
                 >
                   Sign up
                 </button>
-                <h1 className={`${error ? 'text-red-500' : 'hidden'}`}>{error}</h1>
               </div>
             </form>
   

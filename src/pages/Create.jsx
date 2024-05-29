@@ -35,16 +35,7 @@ function Create() {
       <div className="w-full max-w-[500px] mx-auto py-10 relative ">
         <div className="rounded-t-3xl overflow-hidden">
           <div className="bg-gray-200 flex items-center gap-4 p-3">
-            <img
-              className="rounded-full h-10 w-10"
-              src="https://source.unsplash.com/500x600?cat"
-              alt=""
-              srcset=""
-            />
-            <div>
-              <h2>username here</h2>
               <h2 className="font-semibold">send message anonymous!!</h2>
-            </div>
           </div>
           <form onSubmit={clickHandler}>
             <textarea
