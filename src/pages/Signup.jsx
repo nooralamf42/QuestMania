@@ -29,7 +29,7 @@ export default function Signup() {
           toast.success("Account created")
         }).catch(e=>toast.error(e.message)).finally(()=>setLoading(false))  
     }
-
+   
     return (
       <>
         <Loading visible={loading}/>

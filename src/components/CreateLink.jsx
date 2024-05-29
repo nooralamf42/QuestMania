@@ -33,10 +33,8 @@ function CreateLink() {
   let [modalMessage, setModalMessage] = useState("");
   console.log(location.pathname);
   const uid = auth.currentUser.uid;
-  let url = window.location.href;
-  url = url.includes(".com")
-    ? url.replace("https:", "").split(".com")[0] + ".com/user/"
-    : url.split("/")[0] + url.split("/")[2] + "/user/";
+  let url = window.location.origin;
+
   function clickHandlder() {
     navigator.clipboard.writeText(url + uid);
     toast.success("Copied to clipboard");
