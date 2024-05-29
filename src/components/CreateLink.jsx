@@ -33,7 +33,7 @@ function CreateLink() {
   let [modalMessage, setModalMessage] = useState("");
   console.log(location.pathname);
   const uid = auth.currentUser.uid;
-  let url = window.location.origin;
+  let url = window.location.origin + '/user/';
 
   function clickHandlder() {
     navigator.clipboard.writeText(url + uid);
