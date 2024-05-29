@@ -57,7 +57,7 @@ function CreateLink() {
     setIsOpen(false);
   }
 
-  const storyHandler = async (url = story, title = "story.jpg") => {
+  const storyHandler = async (url = "https://i.ibb.co/V3FsGrv/story.jpg", title = "story.jpg") => {
     const response = await fetch(url.toString());
     const blob = await response.blob();
 
